@@ -10,18 +10,18 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class AppComponent {
   title = 'Raad het getal';
   // Variabelen
-  hideInputGuess = false;
-  hideButtonGuess = false;
-  hideButtonReset = true;
-  inputGuess = '';
+  hideInputGuess: boolean = false;
+  hideButtonGuess: boolean = false;
+  hideButtonReset: boolean = true;
+  inputGuess: string = '';
   guessForm: FormGroup;
   // Een willekeurig getal tussen 1 en 100
   randomNumber: number = Math.floor(Math.random()*100);
   // Aantal beurten
-  turn = 10;
-  result = 'Geef een getal in';
+  turn: number = 10;
+  result: string = 'Geef een getal in';
   // De gemaakte keuze weer geven
-  choices = '';
+  choices: string = '';
   // Constructor
   constructor (private formbuilder: FormBuilder) {
     this.guessForm = this.formbuilder.group({
@@ -29,7 +29,7 @@ export class AppComponent {
     });
   }
   
-  onSubmit(choice) {
+  onSubmit = (choice)  => {
     // Controleren of er een nummer ingevuld is
     if (Number(choice.guess)) {
       // Controleren of de gok correct is
