@@ -4,18 +4,21 @@
 
 <form #guessForm="ngForm" (ngSubmit)="onSubmit(guessForm.value)">
   <div>
-    <label for="guess">Doe een gok </label>
-    <input [disabled]="hideInputGuess" type="text" name="guess" [(ngModel)]="inputGuess">
-    <button [disabled]="hideButtonGuess" type="submit">Gok</button>
+    <label for="guess">Doe een gok: </label>
+    <mat-form-field>
+      <input matInput [disabled]="hideInputGuess" type="text" name="guess" [(ngModel)]="inputGuess">
+    </mat-form-field>
+    <button mat-stroked-button [disabled]="hideButtonGuess" type="submit">Gok</button>
   </div>
 </form>
 
-<p>Nog {{turn}} beurten over!</p>
+<p class="mat-body-strong">
+  Nog {{turn}} beurten over!
+</p>
+<mat-progress-bar mode="determinate" value={{progressBarValue}} style="width: 10em;"></mat-progress-bar><br>
 
-<p>{{result}}</p>
+<!--<p>{{result}}</p>-->
 
 <p>Vorige gok: {{choices}}</p>
 
-<button [hidden]="hideButtonReset" (click)="resetGame()">Begin opnieuw</button>
-
-<!--<p>Te raden getal= {{randomNumber}}</p>-->
+<button mat-stroked-button [disabled]="hideButtonReset" (click)="resetGame()">Begin opnieuw</button>

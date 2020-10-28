@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-root',
@@ -19,14 +20,24 @@ export class AppComponent {
   randomNumber: number = Math.floor(Math.random()*100);
   // Aantal beurten
   turn: number = 10;
-  result: string = 'Geef een getal in';
+  //result: string = 'Geef een getal in';
+  result: string = null;
+  // De initiele waarde van de progressbar
+  progressBarValue: number = 100;
   // De gemaakte keuze weer geven
   choices: string = '';
   // Constructor
-  constructor (private formbuilder: FormBuilder) {
-    this.guessForm = this.formbuilder.group({
+  constructor (
+    private _formbuilder: FormBuilder, 
+    private _snackBar: MatSnackBar,
+    ) {
+      this.guessForm = this._formbuilder.group({
       gok: '',
     });
+  }
+
+  openSnackBar (message: string, action: string = '') {
+    this._snackBar.open(message, action, { duration: 2000 });
   }
   
   onSubmit = (choice)  => {
@@ -44,7 +55,9 @@ export class AppComponent {
       // De gok weer geven en een beurt aftrekken
       this.choices += choice.guess + ' ';
       this.turn -=1;
+      this.progressBarValue = this.turn * 10;
       this.inputGuess = '';
+      this.openSnackBar(this.result);
       // Geen beurten meer
       if (this.turn <= 0) {
         this.result = 'GAME OVER!';
@@ -66,6 +79,7 @@ export class AppComponent {
   resetGame() {
     // Alles terug zetten naar de beginwaarden
     this.turn = 10;
+    this.progressBarValue = 100;
     this.choices = '';
     this.result = 'Geef een getal in';
     this.hideInputGuess = false;
